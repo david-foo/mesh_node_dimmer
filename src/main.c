@@ -42,7 +42,7 @@ static struct bt_mesh_health_srv health_srv = {
 };
 
 BT_MESH_HEALTH_PUB_DEFINE(health_pub, 0);
-BT_MESH_MODEL_PUB_DEFINE(gen_level_pub_cli, NULL,  2 + 5 + 4);
+BT_MESH_MODEL_PUB_DEFINE(gen_level_pub_cli, NULL,  2 + 7 + 4);
 
 struct bt_mesh_model root_models[] = {
 	BT_MESH_MODEL_CFG_SRV(&cfg_srv),

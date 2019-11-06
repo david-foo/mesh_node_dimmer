@@ -44,13 +44,13 @@ s16_t get_random_level()
 void button_a_work_handler(struct k_work *work)
 {
 	printk("button_a_work_handler\n");
-	gen_level_set(&root_models[2], 32767);
+	gen_level_set(&root_models[2], 32767, 1000, 200);
 }
 
 void button_b_work_handler(struct k_work *work)
 {
 	printk("button_b_work_handler\n");
-	gen_level_set(&root_models[2], 0);
+	gen_level_set(&root_models[2], 0, 1000, 200);
 }
 
 

@@ -22,8 +22,8 @@ extern struct level_state level_cli_state;
 extern const struct bt_mesh_model_op gen_level_cli_op[];
 
 extern void gen_level_get(struct bt_mesh_model *model);
-extern void gen_level_set(struct bt_mesh_model *model, s16_t level);
-extern void gen_level_set_unack(struct bt_mesh_model *model, s16_t level);
+extern void gen_level_set(struct bt_mesh_model *model, s16_t level, u32_t delay, s32_t trans_time);
+extern void gen_level_set_unack(struct bt_mesh_model *model, s16_t level, u32_t delay, s32_t trans_time);
 extern void gen_delta_set(struct bt_mesh_model *model,  s32_t delta_level);
 extern void gen_delta_set_unack(struct bt_mesh_model *model,  s32_t delta_level);
 extern void gen_move_set(struct bt_mesh_model *model,  s32_t delta_level);
