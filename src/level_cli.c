@@ -106,14 +106,18 @@ void gen_level_set_unack(struct bt_mesh_model *model, s16_t level, u32_t delay, 
 	pub_level_set(model, level, BT_MESH_MODEL_OP_GEN_LEVEL_SET_UNACK, delay, trans_time);
 }
 
-static void pub_delta_set(struct bt_mesh_model *model, s32_t delta_level, u32_t opcode)
+static void pub_delta_set(struct bt_mesh_model *model, s32_t delta_level, u32_t opcode, u32_t delay, s32_t trans_time)
 {
 	struct net_buf_simple *msg = model->pub->msg;
 	int err;
+	u8_t dy = delay / 5;
+	u8_t tt = time2tt(trans_time);
 
 	bt_mesh_model_msg_init(msg, opcode);
 	net_buf_simple_add_le32(msg, delta_level);
 	net_buf_simple_add_u8(msg, tid++);
+	net_buf_simple_add_u8(msg, tt);
+	net_buf_simple_add_u8(msg, dy);
 	err = bt_mesh_model_publish(model);
 	if (err) {
 		printk("bt_mesh_model_publish err %d\n", err);
@@ -121,14 +125,14 @@ static void pub_delta_set(struct bt_mesh_model *model, s32_t delta_level, u32_t 
 	}
 }
 
-void gen_delta_set(struct bt_mesh_model *model,  s32_t delta_level)
+void gen_delta_set(struct bt_mesh_model *model,  s32_t delta_level, u32_t delay, s32_t trans_time)
 {
-	pub_delta_set(model, delta_level, BT_MESH_MODEL_OP_GEN_DELTA_SET);
+	pub_delta_set(model, delta_level, BT_MESH_MODEL_OP_GEN_DELTA_SET, delay, trans_time);
 }
 
-void gen_delat_set_unack(struct bt_mesh_model *model,  s32_t delta_level)
+void gen_delat_set_unack(struct bt_mesh_model *model,  s32_t delta_level, u32_t delay, s32_t trans_time)
 {
-	pub_delta_set(model, delta_level, BT_MESH_MODEL_OP_GEN_DELTA_SET_UNACK);
+	pub_delta_set(model, delta_level, BT_MESH_MODEL_OP_GEN_DELTA_SET_UNACK, delay, trans_time);
 }
 
 void gen_move_set(struct bt_mesh_model *model,  s32_t delta_level)
