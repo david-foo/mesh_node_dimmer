@@ -50,7 +50,7 @@ void button_a_work_handler(struct k_work *work)
 void button_b_work_handler(struct k_work *work)
 {
 	printk("button_b_work_handler\n");
-	gen_delta_set(&root_models[2], -6500, 500, 1000);
+	gen_delta_set(&root_models[2], -6552, 100, 1000);
 }
 
 
