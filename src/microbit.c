@@ -43,13 +43,13 @@ s16_t get_random_level()
 
 void button_a_work_handler(struct k_work *work)
 {
-	printk("button_a_work_handler\n");
-	gen_level_set(&root_models[2], 32767, 200, 1000);
+	//printk("button_a_work_handler\n");
+	gen_delta_set(&root_models[2], 6552, 200, 1000);
 }
 
 void button_b_work_handler(struct k_work *work)
 {
-	printk("button_b_work_handler\n");
+	//printk("button_b_work_handler\n");
 	gen_delta_set(&root_models[2], -6552, 100, 1000);
 }
 
@@ -124,7 +124,6 @@ void board_output_number(bt_mesh_output_action_t action, u32_t number)
 
 	oob_number = number;
 
-	printk("level client OOB %d\n",oob_number);
 	mb_display_print(disp, MB_DISPLAY_MODE_DEFAULT, K_SECONDS(2),
 				"%04u", oob_number);
 }

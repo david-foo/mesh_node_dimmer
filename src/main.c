@@ -123,7 +123,7 @@ void main(void)
 {
 	int err;
 
-	printk("Initializing...\n");
+	printk("Dimmer Initializing...\n");
 
 	level_cli_init();
 	board_init();

@@ -73,7 +73,7 @@ static u8_t time2tt(u32_t timems)
 		resolution = 0x00;
 		steps = timems / 100;
 	}
-	printk("calculated steps=%d,resolution=%d\n", steps, resolution);
+	//printk("calculated steps=%d,resolution=%d\n", steps, resolution);
 	return ((resolution << 6) | steps);
 }
 
@@ -135,14 +135,14 @@ void gen_delat_set_unack(struct bt_mesh_model *model,  s32_t delta_level, u32_t 
 	pub_delta_set(model, delta_level, BT_MESH_MODEL_OP_GEN_DELTA_SET_UNACK, delay, trans_time);
 }
 
-void gen_move_set(struct bt_mesh_model *model,  s32_t delta_level)
+void gen_move_set(struct bt_mesh_model *model,  s32_t delta_level, u32_t delay, s32_t trans_time)
 {
-
+	pub_level_set(model, delta_level, BT_MESH_MODEL_OP_GEN_MOVE_SET, delay, trans_time);
 }
 
-void gen_move_set_unack(struct bt_mesh_model *model,  s32_t delta_level)
+void gen_move_set_unack(struct bt_mesh_model *model,  s32_t delta_level, u32_t delay, s32_t trans_time)
 {
-
+	pub_level_set(model, delta_level, BT_MESH_MODEL_OP_GEN_MOVE_SET_UNACK, delay, trans_time);
 }
 
 
