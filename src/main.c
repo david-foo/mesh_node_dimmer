@@ -4,12 +4,15 @@
  *
  */
 
+#include <zephyr.h>
 #include <sys/printk.h>
 
 #include <settings/settings.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/mesh.h>
+
+#include <minode.h>
 
 #include "board.h"
 #include "level_cli.h"
@@ -119,6 +122,25 @@ static void bt_ready(int err)
 	printk("Mesh initialized\n");
 }
 
+#define ROTARY_NAME(id) _CONCAT(rotary_, id)
+#define ROTARY_DEV(id)  (&ROTARY_NAME(id))
+#define ROTARY_DEVICE_DEFINE(id, connector)                           \
+				MINODE_ROTARY_DEVICE_DEFINE(ROTARY_NAME(id), _CONCAT(A, id),   \
+				STRINGIFY(id),                                               \
+				rotary_on_level_change)
+
+void rotary_on_level_change(struct minode_rotary_device *dev,
+        enum minode_rotary_level prev_level, enum minode_rotary_level new_level)
+{
+  const char *id = dev->user_data;
+  printk("Light[%s] attached on %s level changed: prev_level=%d, new_level=%d.\n", id,
+      dev->connector, prev_level, new_level);
+
+	gen_level_set(&root_models[2], new_level * (65535/9) - 32768, 100, 1000);
+}
+
+ROTARY_DEVICE_DEFINE(0, A0);
+
 void main(void)
 {
 	int err;
@@ -133,4 +155,7 @@ void main(void)
 	if (err) {
 		printk("Bluetooth init failed (err %d)\n", err);
 	}
+
+	minode_rotary_init(ROTARY_DEV(0));
+	minode_rotary_start_listening(ROTARY_DEV(0));
 }
